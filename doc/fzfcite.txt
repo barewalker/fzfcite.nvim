@@ -1,0 +1,92 @@
+*fzfcite.txt*   Lightweight citation picker for Neovim, powered by fzf-lua
+
+==============================================================================
+CONTENTS                                                    *fzfcite-contents*
+
+    1. Introduction ........................... |fzfcite-introduction|
+    2. Requirements ........................... |fzfcite-requirements|
+    3. Setup .................................. |fzfcite-setup|
+    4. Configuration .......................... |fzfcite-config|
+    5. Commands ............................... |fzfcite-commands|
+    6. Lua API ................................ |fzfcite-api|
+
+==============================================================================
+1. Introduction                                         *fzfcite-introduction*
+
+fzfcite.nvim is a minimal citation picker backed by |fzf-lua|. It greps a
+plain-text reference file (YAML by default, but pluggable) and lets you:
+
+  - Insert a citation key (`@key` by default) at the cursor.
+  - Open the PDF associated with a citation key.
+
+No Zotero, no database, no daemons — just a file and a picker.
+
+==============================================================================
+2. Requirements                                         *fzfcite-requirements*
+
+  - Neovim 0.9+
+  - ibhagwan/fzf-lua
+  - POSIX `grep`
+  - A PDF viewer reachable via `xdg-open` / `wslview` / `open`
+    (override via |fzfcite-config.opener|).
+
+==============================================================================
+3. Setup                                                       *fzfcite-setup*
+
+    require("fzfcite").setup({ ... })
+
+See |fzfcite-config| for the full default table.
+
+==============================================================================
+4. Configuration                                              *fzfcite-config*
+
+Defaults: >
+    {
+      ref_files = { "ref.yml", "~/refs/ref.yml" },
+      pdf_dirs  = { ".", "~/refs/pdfs" },
+      citation = {
+        prefix = "@",
+        suffix = "",
+        grep_pattern = "^[a-zA-Z0-9].*:$",
+        extract_key = function(line)
+          return line:match("^[^:]+:%d+:(.+):$")
+        end,
+      },
+      opener = nil,  -- auto-detect
+      fzf = {
+        prompt       = "Citations> ",
+        previewer    = "builtin",
+        winopts      = { height = 0.4, width = 0.9,
+                         preview = { layout = "horizontal" } },
+        open_pdf_key = "ctrl-e",
+      },
+    }
+<
+
+Paths in `ref_files` and `pdf_dirs` are expanded with |expand()|. Relative
+paths are resolved against the current working directory. The first readable
+entry wins.
+
+==============================================================================
+5. Commands                                                 *fzfcite-commands*
+
+                                                               *:FzfciteInsert*
+:FzfciteInsert
+    Open the fzf-lua picker. <Enter> inserts the selected key (wrapped
+    with `prefix` / `suffix`); `open_pdf_key` (default `ctrl-e`) opens the
+    associated PDF instead.
+
+                                                              *:FzfciteOpenPdf*
+:FzfciteOpenPdf [{key}]
+    Open the PDF for {key}. Without an argument, uses the word under the
+    cursor (stripped of the configured prefix/suffix).
+
+==============================================================================
+6. Lua API                                                       *fzfcite-api*
+
+    require("fzfcite").setup(opts)
+    require("fzfcite").insert_citation()
+    require("fzfcite").open_pdf(key)
+    require("fzfcite").open_pdf_under_cursor()
+
+ vim:tw=78:ts=8:ft=help:norl:
