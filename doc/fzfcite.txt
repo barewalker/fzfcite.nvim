@@ -56,9 +56,10 @@ Defaults: >
       fzf = {
         prompt       = "Citations> ",
         previewer    = "builtin",
-        winopts      = { height = 0.4, width = 0.9,
-                         preview = { layout = "horizontal" } },
+        winopts      = { height = 0.85, width = 0.80,
+                         preview = { layout = "vertical" } },
         open_pdf_key = "ctrl-e",
+        view_ref_key = "ctrl-r",
       },
     }
 <
@@ -74,7 +75,11 @@ entry wins.
 :FzfciteInsert
     Open the fzf-lua picker. <Enter> inserts the selected key (wrapped
     with `prefix` / `suffix`); `open_pdf_key` (default `ctrl-e`) opens the
-    associated PDF instead.
+    associated PDF instead; `view_ref_key` (default `ctrl-r`) opens the
+    ref file at the selected entry's line.
+    If the current buffer is not writable (e.g. a dashboard), the key
+    is copied to the `+` and `"` registers instead and a notification
+    is shown.
 
                                                               *:FzfciteOpenPdf*
 :FzfciteOpenPdf [{key}]

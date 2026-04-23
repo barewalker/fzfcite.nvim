@@ -10,9 +10,11 @@ Designed for lightweight Typst / Markdown / plain-text writing workflows.
 
 - Insert `@citekey` (or any configurable format) via `fzf-lua`.
 - Open the PDF associated with a citation key — either from the picker (`ctrl-e` by default) or directly from the citation key under the cursor.
+- Jump into the ref file at the selected entry (`ctrl-r` by default) to read the full bibliography block.
 - Configurable ref-file and PDF search paths (first match wins).
 - Configurable citation prefix/suffix (supports `@key`, `[@key]`, `{key}`, etc.).
 - Configurable grep pattern and key extractor for custom bibliography formats.
+- Falls back to the system clipboard when the current buffer is not writable (e.g. dashboards).
 
 ## Requirements
 
@@ -69,12 +71,14 @@ require("fzfcite").setup({
     prompt    = "Citations> ",
     previewer = "builtin",
     winopts   = {
-      height  = 0.4,
-      width   = 0.9,
-      preview = { layout = "horizontal" },
+      height  = 0.85,
+      width   = 0.80,
+      preview = { layout = "vertical" },
     },
     -- Key in the picker that opens the PDF instead of inserting.
     open_pdf_key = "ctrl-e",
+    -- Key in the picker that opens the ref file at the selected entry.
+    view_ref_key = "ctrl-r",
   },
 })
 ```
@@ -83,7 +87,7 @@ require("fzfcite").setup({
 
 | Command | Description |
 |---|---|
-| `:FzfciteInsert` | Open the fzf-lua picker to insert a citation. `<Enter>` inserts, `ctrl-e` opens the PDF. |
+| `:FzfciteInsert` | Open the fzf-lua picker to insert a citation. `<Enter>` inserts (falls back to clipboard if the buffer is not writable), `ctrl-e` opens the PDF, `ctrl-r` opens the ref file at the selected entry. |
 | `:FzfciteOpenPdf [key]` | Open the PDF for `[key]`, or for the `<cword>` under the cursor if no argument is given. |
 
 ## Example keymaps

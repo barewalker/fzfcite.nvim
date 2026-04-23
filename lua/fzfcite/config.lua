@@ -16,11 +16,12 @@ M.defaults = {
     prompt = "Citations> ",
     previewer = "builtin",
     winopts = {
-      height = 0.4,
-      width = 0.9,
-      preview = { layout = "horizontal" },
+      height = 0.85,
+      width = 0.80,
+      preview = { layout = "vertical" },
     },
     open_pdf_key = "ctrl-e",
+    view_ref_key = "ctrl-r",
   },
 }
 

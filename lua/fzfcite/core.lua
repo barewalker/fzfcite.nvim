@@ -79,7 +79,22 @@ function M.insert_citation(key)
   local opts = require("fzfcite.config").options
   local prefix = opts.citation.prefix or ""
   local suffix = opts.citation.suffix or ""
-  vim.api.nvim_put({ prefix .. key .. suffix }, "c", true, true)
+  local text = prefix .. key .. suffix
+
+  local ok = pcall(vim.api.nvim_put, { text }, "c", true, true)
+  if not ok then
+    vim.fn.setreg("+", text)
+    vim.fn.setreg('"', text)
+    vim.notify("[fzfcite] Buffer not writable — copied to clipboard: " .. text,
+      vim.log.levels.INFO)
+  end
+end
+
+function M.open_ref_at(ref_file, lnum)
+  if not ref_file or not lnum then
+    return
+  end
+  vim.cmd(string.format("edit +%d %s", lnum, vim.fn.fnameescape(ref_file)))
 end
 
 return M

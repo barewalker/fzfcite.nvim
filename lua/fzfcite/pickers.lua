@@ -22,6 +22,11 @@ function M.insert_citation()
 
   local extract = opts.citation.extract_key
 
+  local function parse_location(line)
+    local file, lnum = line:match("^([^:]+):(%d+):")
+    return file, tonumber(lnum)
+  end
+
   local actions = {
     ["default"] = function(selected)
       if selected and selected[1] then
@@ -40,6 +45,15 @@ function M.insert_citation()
         if key then
           core.open_pdf(key)
         end
+      end
+    end
+  end
+
+  if opts.fzf.view_ref_key and opts.fzf.view_ref_key ~= "" then
+    actions[opts.fzf.view_ref_key] = function(selected)
+      if selected and selected[1] then
+        local file, lnum = parse_location(selected[1])
+        core.open_ref_at(file, lnum)
       end
     end
   end
