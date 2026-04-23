@@ -9,8 +9,8 @@ Designed for lightweight Typst / Markdown / plain-text writing workflows.
 ## Features
 
 - Insert `@citekey` (or any configurable format) via `fzf-lua`.
-- Open the PDF associated with a citation key — either from the picker (`ctrl-e` by default) or directly from the citation key under the cursor.
-- Jump into the ref file at the selected entry (`ctrl-r` by default) to read the full bibliography block.
+- Open the PDF associated with a citation key — either from the picker (`ctrl-o` by default) or directly from the citation key under the cursor.
+- Jump into the ref file at the selected entry (`ctrl-y` by default) to read the full bibliography block.
 - Configurable ref-file and PDF search paths (first match wins).
 - Configurable citation prefix/suffix (supports `@key`, `[@key]`, `{key}`, etc.).
 - Configurable grep pattern and key extractor for custom bibliography formats.
@@ -76,9 +76,9 @@ require("fzfcite").setup({
       preview = { layout = "vertical" },
     },
     -- Key in the picker that opens the PDF instead of inserting.
-    open_pdf_key = "ctrl-e",
+    open_pdf_key = "ctrl-o",
     -- Key in the picker that opens the ref file at the selected entry.
-    view_ref_key = "ctrl-r",
+    view_ref_key = "ctrl-y",
     -- Forwarded as-is to the underlying fzf binary via fzf-lua.
     -- Useful for custom `--bind` entries, e.g. to make ctrl-h behave as
     -- backspace inside the prompt (otherwise fzf-lua may steal it for
@@ -93,7 +93,7 @@ require("fzfcite").setup({
 
 | Command | Description |
 |---|---|
-| `:FzfciteInsert` | Open the fzf-lua picker to insert a citation. `<Enter>` inserts (falls back to clipboard if the buffer is not writable), `ctrl-e` opens the PDF, `ctrl-r` opens the ref file at the selected entry. |
+| `:FzfciteInsert` | Open the fzf-lua picker to insert a citation. `<Enter>` inserts (falls back to clipboard if the buffer is not writable), `ctrl-o` opens the PDF, `ctrl-y` opens the ref file at the selected entry. |
 | `:FzfciteOpenPdf [key]` | Open the PDF for `[key]`, or for the `<cword>` under the cursor if no argument is given. |
 
 ## Example keymaps

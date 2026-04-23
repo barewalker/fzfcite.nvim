@@ -20,8 +20,8 @@ M.defaults = {
       width = 0.80,
       preview = { layout = "vertical" },
     },
-    open_pdf_key = "ctrl-e",
-    view_ref_key = "ctrl-r",
+    open_pdf_key = "ctrl-o",
+    view_ref_key = "ctrl-y",
     fzf_opts = {},
   },
 }
