@@ -61,8 +61,9 @@ function M.insert_citation()
   fzf.fzf_exec(cmd, {
     prompt = opts.fzf.prompt,
     previewer = opts.fzf.previewer,
-    actions = actions,
     winopts = opts.fzf.winopts,
+    fzf_opts = opts.fzf.fzf_opts,
+    actions = actions,
   })
 end
 

@@ -22,6 +22,7 @@ M.defaults = {
     },
     open_pdf_key = "ctrl-e",
     view_ref_key = "ctrl-r",
+    fzf_opts = {},
   },
 }
 

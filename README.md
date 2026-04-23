@@ -79,6 +79,12 @@ require("fzfcite").setup({
     open_pdf_key = "ctrl-e",
     -- Key in the picker that opens the ref file at the selected entry.
     view_ref_key = "ctrl-r",
+    -- Forwarded as-is to the underlying fzf binary via fzf-lua.
+    -- Useful for custom `--bind` entries, e.g. to make ctrl-h behave as
+    -- backspace inside the prompt (otherwise fzf-lua may steal it for
+    -- window navigation):
+    --   fzf_opts = { ["--bind"] = "ctrl-h:backward-delete-char" },
+    fzf_opts = {},
   },
 })
 ```

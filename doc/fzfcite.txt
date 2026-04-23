@@ -60,6 +60,7 @@ Defaults: >
                          preview = { layout = "vertical" } },
         open_pdf_key = "ctrl-e",
         view_ref_key = "ctrl-r",
+        fzf_opts     = {},
       },
     }
 <
@@ -67,6 +68,14 @@ Defaults: >
 Paths in `ref_files` and `pdf_dirs` are expanded with |expand()|. Relative
 paths are resolved against the current working directory. The first readable
 entry wins.
+
+`fzf.fzf_opts` is forwarded as-is to the underlying fzf binary. To make
+<C-h> act as backspace inside the picker prompt (fzf-lua may otherwise
+steal it for window navigation): >
+    fzf = {
+      fzf_opts = { ["--bind"] = "ctrl-h:backward-delete-char" },
+    }
+<
 
 ==============================================================================
 5. Commands                                                 *fzfcite-commands*
